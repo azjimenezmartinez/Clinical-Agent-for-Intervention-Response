@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAIR - Clinical Agent</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script>
+        function toggleFields() {
+            const level = document.getElementById("bandwidth").value;
+            document.getElementById("photoField").style.display = (level === "high") ? "block" : "none";
+            document.getElementById("painScale").style.display = (level !== "low") ? "block" : "none";
+        }
+    </script>
+</head>
+<body>
+    <h1>Welcome to CAIR</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label>Name:</label>
+        <input type="text" name="name" required><br><br>
+
+        <label>Bandwidth Level:</label>
+        <select id="bandwidth" name="bandwidth" onchange="toggleFields()" required>
+            <option value="">Select Bandwidth</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+        </select><br><br>
+
+        <div id="photoField" style="display:none;">
+            <label>Upload Photo (optional for high bandwidth):</label>
+            <input type="file" name="photo" accept="image/*"><br><br>
+        </div>
+
+        <label>Symptoms:</label><br>
+        <textarea name="symptoms" rows="4" cols="40" required></textarea><br><br>
+
+        <div id="painScale" style="display:none;">
+            <label>Pain Level (1–10):</label>
+            <input type="range" name="pain_level" min="1" max="10" value="5" oninput="this.nextElementSibling.value = this.value">
+            <output>5</output><br><br>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
